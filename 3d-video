@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>3D Hindi AI Video Generator</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+body{
+margin:0;
+background:black;
+color:white;
+font-family:Arial;
+text-align:center;
+}
+
+textarea{
+width:80%;
+height:100px;
+margin-top:20px;
+}
+
+button{
+padding:10px 20px;
+font-size:18px;
+margin:10px;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<h1>🚀 3D Script To Hindi Voice Video</h1>
+
+<textarea id="script" placeholder="यहाँ अपनी Script लिखें..."></textarea>
+<br>
+
+<button onclick="speakHindi()">🎙 Hindi Voice सुनो</button>
+
+<div id="scene"></div>
+
+<script>
+
+// THREE.JS 3D Scene
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight,0.1,1000);
+let renderer = new THREE.WebGLRenderer();
+
+renderer.setSize(window.innerWidth,400);
+document.getElementById("scene").appendChild(renderer.domElement);
+
+let geometry = new THREE.BoxGeometry();
+let material = new THREE.MeshBasicMaterial({color:0x00ff00, wireframe:true});
+let cube = new THREE.Mesh(geometry, material);
+
+scene.add(cube);
+camera.position.z = 5;
+
+function animate(){
+requestAnimationFrame(animate);
+cube.rotation.x += 0.01;
+cube.rotation.y += 0.01;
+renderer.render(scene,camera);
+}
+animate();
+
+
+// Hindi Voice
+function speakHindi(){
+let text = document.getElementById("script").value;
+
+let speech = new SpeechSynthesisUtterance(text);
+speech.lang = "hi-IN";
+speech.rate = 1;
+speech.pitch = 1;
+
+window.speechSynthesis.speak(speech);
+}
+
+</script>
+
+</body>
+</html>
